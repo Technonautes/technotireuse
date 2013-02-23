@@ -45,5 +45,6 @@ void loop() {
     }
     //
     Serial.println("Purchase OK!");
+    
     total_value = 0;
 } 
