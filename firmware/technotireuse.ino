@@ -17,6 +17,10 @@ int total_value = 0;
 void setup() 
 {
    pinMode(mot,OUTPUT);
+   pinMode(interuptOpen,INPUT);
+   digitalWrite(interuptOpen,HIGH);//setting pullup
+   pinMode(interuptClose,INPUT);
+   digitalWrite(interuptClose,HIGH);//setting pullup
    digitalWrite(mot, LOW);
    myServo.attach(servoPin);
    myServo.write(10);
