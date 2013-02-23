@@ -21,7 +21,13 @@ void setup()
    digitalWrite(interuptOpen,HIGH);//setting pullup
    pinMode(interuptClose,INPUT);
    digitalWrite(interuptClose,HIGH);//setting pullup
+   Serial.println("init: closing the tap");
+   digitalWrite(mot, HIGH);
+   while(digitalRead(interuptClose)==HIGH){
+      //delay(20); ?
+   }
    digitalWrite(mot, LOW);
+   Serial.println("init: tap closed");
    myServo.attach(servoPin);
    myServo.write(10);
    mySerial.begin(9600);
