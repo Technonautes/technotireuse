@@ -2,12 +2,12 @@
 #include <Servo.h> 
 
 Servo myServo;
-int mot=7;
-int interuptOpen=2;//open
-int interuptClose=3;
-int servoPin=6;
-int tempoOpen=6300; //time needed to fill the glass
-int tempoDrops=1000; //for the last drops -> faut pas gacher
+int mot = 7;
+int interuptOpen = 2;//open
+int interuptClose = 8;
+int servoPin = 6;
+int tempoOpen = 6300; //time needed to fill the glass
+int tempoDrops = 1000; //for the last drops -> faut pas gacher
 SoftwareSerial mySerial(10, 11); // RX, TX
 
 unsigned char req_command = 29;
@@ -16,15 +16,18 @@ int total_value = 0;
 
 void setup() 
 {
+   Serial.begin(9600);
    pinMode(mot,OUTPUT);
+   
    pinMode(interuptOpen,INPUT);
    digitalWrite(interuptOpen,HIGH);//setting pullup
    pinMode(interuptClose,INPUT);
    digitalWrite(interuptClose,HIGH);//setting pullup
+   
    Serial.println("init: closing the tap");
    digitalWrite(mot, HIGH);
    while(digitalRead(interuptClose)==HIGH){
-      //delay(20); ?
+      delay(10);
    }
    digitalWrite(mot, LOW);
    Serial.println("init: tap closed");
@@ -32,7 +35,6 @@ void setup()
    myServo.write(10);
    mySerial.begin(9600);
    mySerial.listen();
-   Serial.begin(9600);
 } 
 
 void loop() {
@@ -72,7 +74,7 @@ void loop() {
     digitalWrite(mot,HIGH); //Turn on tap motor
     //Wait until tap is fully opened (1st button closed)
     while(digitalRead(interuptOpen)==HIGH){
-    //delay(20); ?
+    delay(10);
     }
     Serial.println("Stopping tap motor (1st).");
     digitalWrite(mot,LOW); //Turn the motor  off
@@ -81,7 +83,7 @@ void loop() {
     digitalWrite(mot,HIGH); //Turn the motor back on
     //Wait until tap is fully closed (2nd button closed)
     while(digitalRead(interuptClose)==HIGH){
-      //delay(20); ?
+      delay(10);
     }
     Serial.println("Stopping tap motor (2nd).");
     digitalWrite(mot,LOW); //Turn the motor  off
